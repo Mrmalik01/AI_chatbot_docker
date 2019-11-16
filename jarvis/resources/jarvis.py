@@ -11,7 +11,8 @@ class JARVIS(Resource):
     @jwt_required
     def post(self):
         data = self.parser.parse_args()
-        result = JARVISModel.sendMessage(data['message'])
+        print(data['message'])
+        result = JARVISModel.sendMessage(str(data['message']))
         if result:
             return result, 200
         return {"message" : "Internal server error"}, 500

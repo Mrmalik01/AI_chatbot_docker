@@ -8,9 +8,9 @@ class JARVISModel():
     
     @classmethod
     def authenticate(cls):
-        authenticator = IAMAuthenticator(WATSON_KEY['key'])
+        authenticator = IAMAuthenticator('{}'.format(WATSON_KEY['key']))
         service = AssistantV2(
-            version = "2019-02-28",
+            version='2019-02-28',
             authenticator = authenticator
         )
         service.set_service_url(WATSON_KEY['url'])
@@ -37,18 +37,19 @@ class JARVISModel():
     @classmethod
     def sendMessage(cls, msg):
         service = cls.authenticate()
-        if cls.create_session(service):
+        service = cls.create_session(service)
+        if service:
             response = service.message(
-                assistant_id=WATSON_KEY['assistant_id'],
-                session_id=USER_KEY['session_id'],
-                input= {
-                    "message_type" : 'text',
-                    "text" : msg
-                }    
+                assistant_id='{}'.format(WATSON_KEY['assistant_id']),
+                session_id='{}'.format(USER_KEY['session_id']),
+                input={
+                    'message_type': 'text',
+                    'text': msg
+                }
             ).get_result()
-
-            response = json.dumps(response)
-            return response['output'], 200
+            print(json.dumps(response, indent=2))
+            print("Received the result")
+            return str(response), 200
 
         else:
             print("Connection problem")
