@@ -11,12 +11,16 @@ app = Flask(__name__)
 api = Api(app)
 jwt = JWTManager(app)
 
-app.config['SQLALCHEMY_DATABASE_URL'] = 'sqlite:///data.db'
+@app.before_first_request
+def create_tables():
+	db.create_all()
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['JWT_BLACKLIST_ENABLED'] = True
-
-api.secret_key = "this is a secret!!!#@#QW"
+app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
+app.secret_key = "example"
 
 errorBody = {"code":0, "message": ""}
 
@@ -48,6 +52,8 @@ def revoke_access_callback():
     errorBody['message'] = "User logout - please login"
     return errorBody, 401
 
+
+
 api.add_resource(User, "/jarvis/user")
 api.add_resource(UserRegistry, "/jarvis/register")
 api.add_resource(UserLogin, "/jarvis/login")
@@ -59,4 +65,4 @@ api.add_resource(JARVIS, "/jarvis/send-message")
 
 if __name__ == "__main__":
     db.init_app(app)
-    app.run()
+    app.run(host="0.0.0.0" ,debug=True)
