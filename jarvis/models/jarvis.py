@@ -56,13 +56,13 @@ class JarvisModel():
         return False
 
     @classmethod
-    def _delete_session(cls):
+    def _delete_session(cls, session):
         params = (
             ('version', '2019-02-28'),
         )
         response = requests.delete(
-            '{}/v2/assistants/{}/sessions/8d654389-798f-4f4a-a64f-25f20c54996e'.format(WATSON_KEY['url'], 
-            WATSON_KEY['assistant_id']), 
+            '{}/v2/assistants/{}/sessions/{}'.format(WATSON_KEY['url'], 
+            WATSON_KEY['assistant_id'], session), 
             params=params, 
             auth=('apikey', WATSON_KEY['key']))
         response = json.loads(response.text)
@@ -83,6 +83,7 @@ class JarvisModel():
         print(url)
         response = requests.post(url, headers=headers, params=params, data=json.dumps(data), auth=('apikey', WATSON_KEY['key']))
         res = json.loads(response.text)
+        cls._delete_session(session)
         return res
 
 
