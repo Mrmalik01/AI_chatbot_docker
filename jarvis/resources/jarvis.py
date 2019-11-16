@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required
-from models.jarvisAssistant import JARVISModel
+from models.jarvis import JarvisModel
 
 
 class JARVIS(Resource):
@@ -12,7 +12,7 @@ class JARVIS(Resource):
     def post(self):
         data = self.parser.parse_args()
         print(data['message'])
-        result = JARVISModel.sendMessage(str(data['message']))
+        result = JarvisModel.send_message(str(data['message']))
         if result:
             return result, 200
         return {"message" : "Internal server error"}, 500
