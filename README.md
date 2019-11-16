@@ -1,8 +1,10 @@
 # AI_chatbot_docker
 
+Chatbot as a service - It allows user to communicate with IBM-Watson personal assistant using simple interface. 
+
 ## Installation
 
-Before building and running the service, you need to create one file of jarvis/cred.py with given format
+Before building and running the service, you need to create one file jarvis/cred.py of given format
 
 ~~~
 USER_KEY = {   
@@ -34,3 +36,13 @@ docker-compose build
 ~~~
 docker-compose up
 ~~~
+
+## Steps for interacting with the bot
+
+<ol>
+    <li>Register with username and password</li>
+    <li>Login with username and password</li>
+    <li>Send message using send end point</li>
+</ol>
+
+Enjoy!!
