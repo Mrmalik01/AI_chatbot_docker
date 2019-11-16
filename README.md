@@ -1,6 +1,6 @@
 # AI_chatbot_docker
 
-Chatbot as a service - It allows user to communicate with IBM-Watson personal assistant using simple interface. 
+Chatbot as a service - It allows user to communicate with IBM-Watson personal assistant using a simple interface. 
 
 ## Installation
 
