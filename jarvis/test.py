@@ -51,8 +51,10 @@ def _delete_session():
         response = json.loads(response.text)
         return response
 
-_delete_session()
+
 #import requests
+
+
 
 #headers = {
     #'Content-Type': 'application/json',
@@ -66,3 +68,8 @@ _delete_session()
 #data = '{"input": {"text": "Hello"}}'
 
 #response = requests.post('{}/v2/assistants/{}/sessions/{}/message', headers=headers, params=params, data=data, auth=('apikey', '{apikey}'))
+
+
+from models.jarvis import JarvisModel
+
+print(JarvisModel.send_message("hello"))

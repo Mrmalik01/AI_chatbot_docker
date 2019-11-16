@@ -59,7 +59,7 @@ api.add_resource(UserRegistry, "/jarvis/register")
 api.add_resource(UserLogin, "/jarvis/login")
 api.add_resource(FreshToken, "/jarvis/token-refresh")
 api.add_resource(UserLogout, "/jarvis/logout")
-api.add_resource(JARVIS, "/jarvis/send-message")
+api.add_resource(JARVIS, "/jarvis/send")
 
 
 

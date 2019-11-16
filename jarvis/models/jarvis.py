@@ -1,18 +1,13 @@
 from cred import USER_KEY, WATSON_KEY
 import requests
-class Message():
-    def __init__(self, message_type, text):
-        self.message_type = message_type
-        self.text = text
-
-    def json(self):
-        return {"message_type" : self.message_type, "text" : self.text}
+import json
 
 class JarvisModel():
     def __init__(self):
         pass
 
-    def retrieve_access_token():
+    @classmethod
+    def retrieve_access_token(cls):
         url = USER_KEY['auth_url']
         headers = {"Content-Type" : "application/x-www-form-urlencoded", "Accept": "application/json"}
         data = {"apikey" : WATSON_KEY['key'], "grant_type" : "urn:ibm:params:oauth:grant-type:apikey"}
@@ -26,7 +21,8 @@ class JarvisModel():
             return True
         print("Access-token extraction failed")
 
-    def refresh_access_token(self):
+    @classmethod
+    def refresh_access_token(cls):
         url = USER_KEY['auth_url']
         headers = {"Authorization" : "Basic Yng6Yng="}
         data = {"grant_type" : "refresh_token","refresh_token": USER_KEY['refresh_token']}
@@ -40,7 +36,8 @@ class JarvisModel():
         print("Error while refreshing the token")
         return False
 
-    def _create_session():
+    @classmethod
+    def _create_session(cls):
         params = (
             ('version', '2019-02-28'),
         )
@@ -54,11 +51,12 @@ class JarvisModel():
         if session_id :
             USER_KEY["session_id"] = session_id
             print("Session with IBM Watson created")
-            return True
+            return session_id
         print("Session problem")
         return False
 
-    def _delete_session():
+    @classmethod
+    def _delete_session(cls):
         params = (
             ('version', '2019-02-28'),
         )
@@ -70,15 +68,15 @@ class JarvisModel():
         response = json.loads(response.text)
         return response
 
-    def send_message(message):
-        session = _create_session()
+    @classmethod
+    def send_message(cls, message):
+        session = cls._create_session()
         print(session)
         data = {
             "input": {
                 "text": message
             }
         }
-        #_auth = ('apikey',WATSON_KEY['key'])
         params = (('version', '2019-02-28'),)
         headers = {"Content-Type": "application/json"}
         url = WATSON_KEY['assistant_url']+"/{}/message".format(session)

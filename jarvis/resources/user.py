@@ -25,8 +25,8 @@ errorMessage=  {
 class User(Resource):
     @jwt_required
     def get(self):
-        data = _parser.parse_args()
-        user = UserModel.find_by_username(data['username'])
+        user_id = get_jwt_identity()
+        user = UserModel.find_by_id(user_id)
         if user:
             return user.json(), 200
 
