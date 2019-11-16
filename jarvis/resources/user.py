@@ -1,5 +1,4 @@
 from flask_restful import Resource, reqparse
-from flask import jsonify
 from werkzeug.security import safe_str_cmp
 from flask_jwt_extended import (
     jwt_required, 
@@ -29,11 +28,11 @@ class User(Resource):
         data = _parser.parse_args()
         user = UserModel.find_by_username(data['username'])
         if user:
-            return jsonify(user.json()), 200
+            return user.json(), 200
 
         errorMessage['code'] = 404
         errorMessage['message'] = "User does not exist"
-        return jsonify(errorMessage), 404
+        return errorMessage, 404
 
 class UserRegistry(Resource):
 
@@ -43,12 +42,12 @@ class UserRegistry(Resource):
         if user:
             errorMessage['code'] = 400
             errorMessage['message'] = "Username is taken"
-            return jsonify(errorMessage), 400
+            return errorMessage, 400
         print(data)
         user = UserModel(**data)
         user.save_to_db()
         print(user.json())
-        return jsonify(user.json()), 201
+        return user.json(), 201
 
 class UserLogin(Resource):
 
@@ -56,26 +55,26 @@ class UserLogin(Resource):
         data = _parser.parse_args()
         user = UserModel.find_by_username(data['username'])
         if user and safe_str_cmp(user.password, data['password']):
-            return jsonify({
+            return {
                     "access_token" : create_access_token(identity=user.id, fresh=True),
-                    "refresh_token" : create_refresh_token(user)
-                }), 201
+                    "refresh_token" : create_refresh_token(user.id)
+                }, 201
 
         errorMessage['code'] = 404
         errorMessage['message'] = "User not found, please register"
-        return jsonify(errorMessage), 404
+        return errorMessage, 404
 
 class FreshToken(Resource):
     
     @jwt_refresh_token_required
     def post(self):
         user_id = get_jwt_identity()
-        if UserModel.find_by_id(id=  user_id):
-            return jsonify({"access_token" : create_access_token(identity=user_id, fresh=False)})
+        if UserModel.find_by_id(id= user_id):
+            return {"access_token" : create_access_token(identity=user_id, fresh=False)}
         
         errorMessage['code'] = 404
         errorMessage['message'] = "User does not exist"
-        return jsonify(errorMessage), 404
+        return errorMessage, 404
     
 
 class UserLogout(Resource):
@@ -84,4 +83,4 @@ class UserLogout(Resource):
     def post(self):
         jti = get_raw_jwt()['jti']
         BLACKLIST.add(jti)
-        return jsonify({"message": "User logout successfully"}),200
+        return {"message": "User logout successfully"},200

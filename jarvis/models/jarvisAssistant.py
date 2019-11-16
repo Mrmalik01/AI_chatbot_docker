@@ -48,10 +48,10 @@ class JARVISModel():
             ).get_result()
 
             response = json.dumps(response)
-            return response['output']
+            return response['output'], 200
 
         else:
             print("Connection problem")
-            return None
+            return {"message" : "connection problem"}, 500
 
 
