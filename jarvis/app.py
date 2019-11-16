@@ -3,6 +3,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from db import db
 from resources.user import User, UserRegistry, UserLogin, FreshToken, UserLogout
+from resources.jarvis import JARVIS
 from blacklist import BLACKLIST
 
 
@@ -52,6 +53,7 @@ api.add_resource(UserRegistry, "/jarvis/register")
 api.add_resource(UserLogin, "/jarvis/login")
 api.add_resource(FreshToken, "/jarvis/token-refresh")
 api.add_resource(UserLogout, "/jarvis/logout")
+api.add_resource(JARVIS, "/jarvis/send-message")
 
 
 

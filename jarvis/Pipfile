@@ -11,6 +11,8 @@ flask = "*"
 flask-sqlalchemy = "*"
 flask-restful = "*"
 flask-jwt-extended = "*"
+requests = "*"
+ibm-watson = ">=4.0.1"
 
 [requires]
 python_version = "3.6"

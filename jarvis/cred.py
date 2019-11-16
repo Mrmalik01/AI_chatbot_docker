@@ -1,6 +1,11 @@
 USER_KEY = { 
     "key" : "z0WC7Jire4GTWmXPnT3Gb5n3NWZjJP01EugOAMRU1JRAzbQ7WnxbumzDzrtnyIjXISrooMvtz4WwEvThoV7NxvuB",  
-    "client_id" :"IBMid-550004P49Q"}
+    "client_id" :"IBMid-550004P49Q",
+    "access_token" : "",
+    "refresh_token ": "",
+    "session_id" : "",
+    "auth_url" : "https://iam.cloud.ibm.com/identity/token"
+}
 
 WATSON_KEY = {
     "key" : "z0WC7Jire4GTWmXPnT3Gb5n3NWZjJP01EugOAMRU1JRA", 
@@ -9,7 +14,8 @@ WATSON_KEY = {
     "assistant_name" : "JARVIS",
     "assistant_url" : "https://gateway-lon.watsonplatform.net/assistant/api/v2/assistants/958abac2-2068-44d4-80a6-3974eb0d51b6/sessions",
     "version" : "2019-02-28"
-    }
+}
+
 
 
 
