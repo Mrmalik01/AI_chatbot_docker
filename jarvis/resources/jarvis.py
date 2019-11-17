@@ -7,7 +7,6 @@ parser = reqparse.RequestParser()
 parser.add_argument("message", type=str, required=True, help="This field is required")
 
 class JARVIS(Resource):
-    
     @jwt_required
     def post(self):
         data = parser.parse_args()
